@@ -17,12 +17,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btnValidar, btnHelp;
     private EditText txtUsuario, txtPassword;
     TextView txtCount;
+    String encriptado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         btnValidar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData("http://192.168.100.71:8080/uisrael/search_get.php?cedula=" + txtUsuario.getText() + "");
-                //getData("http://10.12.7.78:8080/uisrael/search_get.php?cedula=123");
+                getData("http://10.12.7.78:8080/uisrael/search_user_get.php?cedula=" + txtUsuario.getText() + "");
+
             }
         });
 
@@ -57,20 +62,21 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         jsonObject = response.getJSONObject(i);
                         Usuario = jsonObject.getString("cedula");
-                        Password = jsonObject.getString("nombre");
+                        Password = jsonObject.getString("password");
+                        String passenc =PassEncript(txtPassword.getText().toString());
 
-                        if (!txtUsuario.getText().toString().equals(Usuario) || !txtPassword.getText().toString().equals(Password)) {
+                        if (!txtUsuario.getText().toString().equals(Usuario) || !passenc.equals(Password)) {
                             Toast.makeText(getApplicationContext(), "Credenciales Incorrectas", Toast.LENGTH_SHORT).show();
-                            for (int count = 3; count >=0 ; count --){
+                            for (int count = 3; count <=0 ; count --){
                                 if (count==0){
                                     finish();
                                 }
                             }
                             //txtCount.setText("Se envia"+Usuario+Password);
-                        } else if (txtUsuario.getText().toString().equals(Usuario) || txtPassword.getText().toString().equals(Password)) {
+                        } else if (txtUsuario.getText().toString().equals(Usuario) && passenc.equals(Password)) {
                             Acceso();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Error al Autenticar", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error al Autenticar"+passenc, Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (JSONException e) {
@@ -91,13 +97,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Acceso() {
-
         Intent actividadHome = new Intent(MainActivity.this, ActividadHome.class);
         actividadHome.putExtra("UserName", txtUsuario.getText().toString());
         Toast.makeText(MainActivity.this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
         startActivity(actividadHome);
+    }
 
+    public void Registrar(View view){
+        Intent actividaRegistrar = new Intent(MainActivity.this,adduser.class);
+        startActivity(actividaRegistrar);
+    }
 
+    public String PassEncript(String compara){
+
+        try {
+            encriptado = get_SHA_256_SecurePassword(compara,getSalt());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Error de Encriptado", Toast.LENGTH_SHORT).show();
+        }
+        return encriptado;
+    }
+
+    private static String get_SHA_256_SecurePassword(String passwordToHash, byte[] salt)
+    {
+
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt);
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+
+    private static byte[] getSalt() throws NoSuchAlgorithmException
+    {
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+        byte[] salt = new byte[16];
+        sr.nextBytes(salt);
+        return salt;
     }
 
 }
