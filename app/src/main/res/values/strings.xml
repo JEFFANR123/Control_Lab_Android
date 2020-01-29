@@ -3,6 +3,7 @@
     <string name="a1Usuario">Ingrese su Usuario/CI</string>
     <string name="a1Password">Ingrese su Password</string>
     <string name="a1BtnConfirmar">Validar</string>
+    <string name="a2Registrar">Registrar</string>
     <string name="a1BtnHelp">Help</string>
     <string name="a1Vacio"></string>
 </resources>
