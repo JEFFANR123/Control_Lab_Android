@@ -29,7 +29,8 @@ public class adduser extends AppCompatActivity {
     EditText ciuser, passuser, nomuser, apeuser, niveluser;
     Button btnrec;
     //Variables globales para usarlos entre funciones
-    String pass_encrip;
+    String pass_encrip, passHex;
+
     byte[] salt;
 
     @Override
@@ -57,11 +58,15 @@ public class adduser extends AppCompatActivity {
 
     //Creamos una funcion que me llame a la funcion de encriptacion con sus parametros de entrada, el String ingresado por el User y el salt aleatorio
     public String generaPass(String password) {
+       // byte[] salt;
+
 
         try {
+
             salt = getSalt();
             pass_encrip = get_SHA_256_SecurePassword(password, salt);
-            bytesToHex(salt);
+            passHex = bytesToHex(salt);
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Ocurrio un error Encriptando", Toast.LENGTH_SHORT).show();
@@ -99,7 +104,7 @@ public class adduser extends AppCompatActivity {
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("cedula", ciuser.getText().toString());
                 parametros.put("password", generaPass(passuser.getText().toString()));
-                parametros.put("saltpass", salt.toString());
+                parametros.put("saltpass", passHex);
                 parametros.put("nombre", nomuser.getText().toString());
                 parametros.put("apellido", apeuser.getText().toString());
                 parametros.put("nivel", niveluser.getText().toString());
