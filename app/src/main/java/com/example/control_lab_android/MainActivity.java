@@ -26,8 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnValidar, btnHelp;
     private EditText txtUsuario, txtPassword;
-    TextView txtCount;
+    TextView txtCount,salida;
     String encriptado;
+    String Usuario;
+    String Password;
+    String SaltPass;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         txtUsuario = findViewById(R.id.txtUsuario);
         txtPassword = findViewById(R.id.txtPassword);
         txtCount = findViewById(R.id.txtCount);
+        salida = findViewById(R.id.sal);
 
         btnValidar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,16 +60,17 @@ public class MainActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                String Usuario;
-                String Password;
+
                 JSONObject jsonObject = null;
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
                         Usuario = jsonObject.getString("cedula");
                         Password = jsonObject.getString("password");
-                        String passenc =PassEncript(txtPassword.getText().toString());
+                        SaltPass = jsonObject.getString("saltpass");
+                        salida.setText(SaltPass);
 
+                        String passenc =PassEncript(txtPassword.getText().toString());
                         if (!txtUsuario.getText().toString().equals(Usuario) || !passenc.equals(Password)) {
                             Toast.makeText(getApplicationContext(), "Credenciales Incorrectas", Toast.LENGTH_SHORT).show();
                             for (int count = 3; count <=0 ; count --){
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             encriptado = get_SHA_256_SecurePassword(compara,getSalt());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),"Error de Encriptado", Toast.LENGTH_SHORT).show();
         }
@@ -142,12 +148,18 @@ public class MainActivity extends AppCompatActivity {
         return generatedPassword;
     }
 
-    private static byte[] getSalt() throws NoSuchAlgorithmException
+//    private static byte[] getSalt() throws NoSuchAlgorithmException
+//    {
+//        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+//        byte[] salt = new byte[16];
+//        sr.nextBytes(salt);
+//        return salt;
+//    }
+    public byte[] getSalt()
     {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
+        byte[] salt = SaltPass.getBytes();
         return salt;
+
     }
 
 }

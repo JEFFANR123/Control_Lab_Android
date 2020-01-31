@@ -1,13 +1,13 @@
 package com.example.control_lab_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,7 +28,10 @@ public class adduser extends AppCompatActivity {
     TextView salida;
     EditText ciuser, passuser, nomuser, apeuser, niveluser;
     Button btnrec;
+    //Variables globales para usarlos entre funciones
     String pass_encrip;
+    byte[] salt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,9 @@ public class adduser extends AppCompatActivity {
         apeuser = findViewById(R.id.userape);
         niveluser = findViewById(R.id.usernivel);
         btnrec = findViewById(R.id.btnpass);
+        salida = findViewById(R.id.saltsalida);
 
+        //Llamamos a la funcion con el metodo GET y pasamos el parametro de conexion o URL
         btnrec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,20 +55,34 @@ public class adduser extends AppCompatActivity {
 
     }
 
-    public String generaPass(String password)  {
+    //Creamos una funcion que me llame a la funcion de encriptacion con sus parametros de entrada, el String ingresado por el User y el salt aleatorio
+    public String generaPass(String password) {
 
         try {
-            pass_encrip = get_SHA_256_SecurePassword(password, getSalt());
-            byte[] sal = getSalt();
-
+            salt = getSalt();
+            pass_encrip = get_SHA_256_SecurePassword(password, salt);
+            bytesToHex(salt);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Ocurrio un error Encriptando",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Ocurrio un error Encriptando", Toast.LENGTH_SHORT).show();
         }
         return pass_encrip;
     }
 
-    private void registrar(String URL){
+    //Captura el salt generado y lo pasa de byte a hexadecimal para poder guardarlo en la base de datos
+    private static String bytesToHex(byte[] hashInBytes) {
+
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashInBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+
+    }
+
+    // Creamos la funcion para registrar el usuario, este es el ultimo que se ejecuta.
+
+    private void registrar(String URL) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -72,17 +91,18 @@ public class adduser extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> parametros=new HashMap<String, String>();
-                parametros.put("cedula",ciuser.getText().toString());
-                parametros.put("password",generaPass(passuser.getText().toString()));
-                parametros.put("nombre",nomuser.getText().toString());
-                parametros.put("apellido",apeuser.getText().toString());
-                parametros.put("nivel",niveluser.getText().toString());
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("cedula", ciuser.getText().toString());
+                parametros.put("password", generaPass(passuser.getText().toString()));
+                parametros.put("saltpass", salt.toString());
+                parametros.put("nombre", nomuser.getText().toString());
+                parametros.put("apellido", apeuser.getText().toString());
+                parametros.put("nivel", niveluser.getText().toString());
                 return parametros;
             }
 
@@ -92,9 +112,9 @@ public class adduser extends AppCompatActivity {
 
     }
 
+    // Se crea la funcion para generar la password encriptada, tiene como parametros el String y el salt que se utilizan en la funcion de encriptacion.
 
-    private static String get_SHA_256_SecurePassword(String passwordToHash, byte[] salt)
-    {
+    private static String get_SHA_256_SecurePassword(String passwordToHash, byte[] salt) {
 
         String generatedPassword = null;
         try {
@@ -103,24 +123,23 @@ public class adduser extends AppCompatActivity {
             byte[] bytes = md.digest(passwordToHash.getBytes());
             StringBuilder sb = new StringBuilder();
 
-            for(int i=0; i< bytes.length ;i++)
-            {
+            for (int i = 0; i < bytes.length; i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return generatedPassword;
     }
 
-    private static byte[] getSalt() throws NoSuchAlgorithmException
-    {
+    //Funcion para crear el salt para usarlo en la encriptacion sha-256
+
+    private static byte[] getSalt() throws NoSuchAlgorithmException {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[16];
         sr.nextBytes(salt);
         return salt;
     }
+
 }
