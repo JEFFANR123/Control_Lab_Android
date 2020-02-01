@@ -10,12 +10,12 @@
         android:id="@+id/txtUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="50dp"
         android:ems="10"
         android:hint="Cedula"
         android:inputType="textPersonName"
         android:text="@string/a1Vacio"
-        app:layout_constraintBottom_toTopOf="@+id/sal"
+        app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -51,7 +51,7 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/btnValidar"
         app:layout_constraintStart_toStartOf="@+id/txtUsuario"
-        app:layout_constraintTop_toBottomOf="@+id/sal" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUsuario" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -59,18 +59,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/txtUsuario"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_israel" />
 
     <ImageButton
         android:id="@+id/btnadduser"
-        android:layout_width="98dp"
+        android:layout_width="110dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:layout_marginBottom="42dp"
         android:onClick="Registrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,20 +80,10 @@
         android:id="@+id/btnhelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="42dp"
         android:text="Ayuda"
         app:layout_constraintBottom_toTopOf="@+id/btnadduser"
         app:layout_constraintStart_toStartOf="@+id/btnValidar"
         app:layout_constraintTop_toBottomOf="@+id/btnValidar" />
 
-    <TextView
-        android:id="@+id/sal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txtPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUsuario" />
 </androidx.constraintlayout.widget.ConstraintLayout>

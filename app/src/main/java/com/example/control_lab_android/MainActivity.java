@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         txtUsuario = findViewById(R.id.txtUsuario);
         txtPassword = findViewById(R.id.txtPassword);
         txtCount = findViewById(R.id.txtCount);
-        salida = findViewById(R.id.sal);
+
 
         btnValidar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
                         Usuario = jsonObject.getString("cedula");
                         Password = jsonObject.getString("password");
                         SaltPass = jsonObject.getString("saltpass");
-
-                        salida.setText(SaltPass);
                         //Pasamos a un String lo que ingresa el User pero antes pasa por la Funcion de PassEncript para poder comparar.
                         String passenc = PassEncript(txtPassword.getText().toString());
 

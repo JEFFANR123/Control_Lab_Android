@@ -1,5 +1,6 @@
 package com.example.control_lab_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class adduser extends AppCompatActivity {
 
-    TextView salida;
+
     EditText ciuser, passuser, nomuser, apeuser, niveluser;
     Button btnrec;
     //Variables globales para usarlos entre funciones
@@ -43,13 +44,21 @@ public class adduser extends AppCompatActivity {
         apeuser = findViewById(R.id.userape);
         niveluser = findViewById(R.id.usernivel);
         btnrec = findViewById(R.id.btnpass);
-        salida = findViewById(R.id.saltsalida);
+
 
         //Llamamos a la funcion con el metodo GET y pasamos el parametro de conexion o URL
         btnrec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registrar("http://10.12.7.78:8080/uisrael/insert_user_post.php");
+                Intent regresa =  new Intent(adduser.this, MainActivity.class);
+                startActivity(regresa);
+                ciuser.setText("");
+                passuser.setText("");
+                nomuser.setText("");
+                apeuser.setText("");
+                niveluser.setText("");
+
             }
         });
 

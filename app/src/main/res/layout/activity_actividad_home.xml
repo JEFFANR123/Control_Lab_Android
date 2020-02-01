@@ -10,10 +10,12 @@
         android:id="@+id/imgbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="31dp"
+        android:background="@android:drawable/ic_menu_camera"
         android:onClick="inicializarQR"
-        app:layout_constraintEnd_toStartOf="@+id/user"
-        app:layout_constraintStart_toStartOf="@+id/user"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/qr_code" />
 
@@ -25,8 +27,8 @@
         android:layout_marginRight="14dp"
         android:layout_marginBottom="22dp"
         android:text="@string/a2Registrar"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/button2" />
+        app:layout_constraintBottom_toTopOf="@+id/btnVer"
+        app:layout_constraintEnd_toEndOf="@+id/btnVer" />
 
     <TextView
         android:id="@+id/textView11"
@@ -34,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="27dp"
         android:text="CI Usuario / User"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtn" />
@@ -43,7 +45,7 @@
         android:id="@+id/lab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="30dp"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/disp"
@@ -53,7 +55,7 @@
         android:id="@+id/asig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="35dp"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +65,7 @@
         android:id="@+id/disp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@+id/asig"
         app:layout_constraintStart_toStartOf="@+id/asig"
@@ -83,7 +85,7 @@
         android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="27dp"
         android:background="#000A0000"
         android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@+id/piso"
@@ -96,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="35dp"
         android:text="Asignatura"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -107,12 +109,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="117dp"
-        android:layout_marginBottom="117dp"
+        android:layout_marginTop="72dp"
         android:text="Dispositivo / Device"
-        app:layout_constraintBottom_toTopOf="@+id/registra"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"
@@ -120,17 +120,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginTop="25dp"
         android:text="Piso / Floor"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/piso"
         android:layout_width="0dp"
         android:layout_height="23dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="42dp"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/lab"
         app:layout_constraintEnd_toStartOf="@+id/lab"
@@ -138,24 +138,25 @@
         app:layout_constraintTop_toTopOf="@+id/user" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnVer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="22dp"
         android:text="Ver Registros"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/btnSalir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnSalir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="19dp"
         android:layout_marginRight="19dp"
         android:layout_marginBottom="106dp"
+        android:onClick="Salir"
         android:text="Salir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button2" />
+        app:layout_constraintEnd_toEndOf="@+id/btnVer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

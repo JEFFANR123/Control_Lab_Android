@@ -30,7 +30,7 @@ public class ActividadHome extends AppCompatActivity {
     private static final int REQUEST_CODE_QR_SCAN = 101;
     Bundle recibeDatos;
     TextView usuario, floor, laboratorio, dispositivo, asignatura;
-    Button guardar;
+    Button guardar, salir, verRecords;
     ImageButton capturar;
 
     @Override
@@ -43,6 +43,7 @@ public class ActividadHome extends AppCompatActivity {
         dispositivo = findViewById(R.id.disp);
         asignatura = findViewById(R.id.asig);
         guardar = findViewById(R.id.registra);
+        salir = findViewById(R.id.btnSalir);
         recibeDatos = getIntent().getExtras();
         String UserName = recibeDatos.getString("UserName");
         usuario.setText("E" + UserName);
@@ -54,8 +55,11 @@ public class ActividadHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registrar("http://192.168.100.71:8080/uisrael/insert_user_post.php");
+
             }
         });
+
+
 
 
     }
@@ -84,6 +88,7 @@ public class ActividadHome extends AppCompatActivity {
         }).create().show();
     }
 
+    // Creamos la funcion de lectura del codigo QR, utiliza la libreria en GITHUB
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -97,6 +102,8 @@ public class ActividadHome extends AppCompatActivity {
         }
         if (requestCode == REQUEST_CODE_QR_SCAN) {
             if (data != null) {
+
+                // Se realiza la lectura del QR y se lo pasa por un SPLIT -> ;
                 String lectura = data.getStringExtra("com.blikoon.qrcodescanner.got_qr_scan_relult");
                 String cadena= lectura;
                 String[] div = cadena.split(";");
@@ -105,13 +112,15 @@ public class ActividadHome extends AppCompatActivity {
                 String dis=div[2];
                 String asi=div[3];
                 floor.setText(pis);
-                laboratorio.setText("normal");
+                laboratorio.setText(lab);
                 dispositivo.setText(dis);
                 asignatura.setText(asi);
                 Toast.makeText(getApplicationContext(), "QR Capturado", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    // Creamos la funcion de Registrar utilizando POST que nos regresa el parametros
 
     private void registrar(String URL){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -141,5 +150,11 @@ public class ActividadHome extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
+    // Funcion Salir
+    public void Salir(View s){
+        finish();
+    }
+
 
 }
