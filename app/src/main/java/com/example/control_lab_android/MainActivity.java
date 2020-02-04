@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnValidar, btnHelp;
     private EditText txtUsuario, txtPassword;
-    TextView txtCount, salida;
+    TextView txtCount, salida, salidasal;
     String encriptado;
     String Usuario;
     String Password;
@@ -42,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
         btnHelp = findViewById(R.id.btnhelp);
         txtUsuario = findViewById(R.id.txtUsuario);
         txtPassword = findViewById(R.id.txtPassword);
-        txtCount = findViewById(R.id.txtCount);
+//        txtCount = findViewById(R.id.txtCount);
+//        salida = findViewById(R.id.passbase);
+//        salidasal = findViewById(R.id.txtsalt);
 
 
         btnValidar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData("http://10.12.7.78:8080/uisrael/search_user_get.php?cedula=" + txtUsuario.getText() + "");
+                getData("http://10.12.7.78:80/uisrael/search_user_get.php?cedula=" + txtUsuario.getText() + "");
             }
         });
     }
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                         SaltPass = jsonObject.getString("saltpass");
                         //Pasamos a un String lo que ingresa el User pero antes pasa por la Funcion de PassEncript para poder comparar.
                         String passenc = PassEncript(txtPassword.getText().toString());
+//                        salida.setText(passenc);
+//                        salidasal.setText(SaltPass);
 
                         if (txtUsuario.getText().toString().equals(Usuario) && !passenc.equals(Password)) {
                             Toast.makeText(getApplicationContext(), "Credenciales Incorrectas", Toast.LENGTH_SHORT).show();

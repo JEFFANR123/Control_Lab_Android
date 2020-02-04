@@ -10,13 +10,13 @@
         android:id="@+id/txtUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Cedula"
         android:inputType="textPersonName"
         android:text="@string/a1Vacio"
-        app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -24,66 +24,54 @@
         android:id="@+id/btnValidar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
+        android:layout_marginTop="29dp"
         android:text="@string/a1BtnConfirmar"
-        app:layout_constraintBottom_toTopOf="@+id/btnhelp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtPassword"
+        app:layout_constraintStart_toStartOf="@+id/txtPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
-
-    <TextView
-        android:id="@+id/txtCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="58dp"
         android:ems="10"
         android:hint="@string/a1Password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btnValidar"
-        app:layout_constraintStart_toStartOf="@+id/txtUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUsuario" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtUsuario"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_israel" />
-
-    <ImageButton
-        android:id="@+id/btnadduser"
-        android:layout_width="110dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginRight="29dp"
-        android:layout_marginBottom="42dp"
-        android:onClick="Registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnhelp"
-        app:srcCompat="@drawable/add_user" />
 
     <Button
         android:id="@+id/btnhelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="42dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="40dp"
         android:text="Ayuda"
-        app:layout_constraintBottom_toTopOf="@+id/btnadduser"
-        app:layout_constraintStart_toStartOf="@+id/btnValidar"
+        app:layout_constraintStart_toStartOf="@+id/btnadduser"
+        app:layout_constraintTop_toBottomOf="@+id/btnadduser" />
+
+    <Button
+        android:id="@+id/btnadduser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:onClick="Registrar"
+        android:text="Registrar Usuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnValidar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

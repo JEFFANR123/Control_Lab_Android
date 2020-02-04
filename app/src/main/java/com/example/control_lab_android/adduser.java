@@ -50,17 +50,20 @@ public class adduser extends AppCompatActivity {
         btnrec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar("http://10.12.7.78:8080/uisrael/insert_user_post.php");
-                Intent regresa =  new Intent(adduser.this, MainActivity.class);
-                startActivity(regresa);
-                ciuser.setText("");
-                passuser.setText("");
-                nomuser.setText("");
-                apeuser.setText("");
-                niveluser.setText("");
+
+                if(ciuser.getText().toString().equals("") ||
+                        passuser.getText().toString().equals("")||
+                        nomuser.getText().toString().equals("")||
+                        apeuser.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"Campos Vacios", Toast.LENGTH_LONG).show();
+                }else if (ciuser.length()>10 || ciuser.length()<10){
+                    Toast.makeText(getApplicationContext(),"Cedula Invalida",Toast.LENGTH_LONG).show();
+                }else{
+                    registrar("http://10.12.7.78:80/uisrael/insert_user_post.php");
+                }
 
             }
-        });
+            });
 
 
     }
@@ -119,11 +122,11 @@ public class adduser extends AppCompatActivity {
                 parametros.put("nivel", niveluser.getText().toString());
                 return parametros;
             }
-
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
+        Intent regresa =  new Intent(adduser.this, MainActivity.class);
+        startActivity(regresa);
     }
 
     // Se crea la funcion para generar la password encriptada, tiene como parametros el String y el salt que se utilizan en la funcion de encriptacion.

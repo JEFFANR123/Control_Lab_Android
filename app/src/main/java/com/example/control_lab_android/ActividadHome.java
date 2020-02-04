@@ -54,13 +54,10 @@ public class ActividadHome extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar("http://192.168.100.71:8080/uisrael/insert_user_post.php");
+                registrar("http://10.12.7.78:80/uisrael/insert_user_post.php");
 
             }
         });
-
-
-
 
     }
 
