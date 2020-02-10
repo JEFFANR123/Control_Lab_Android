@@ -26,13 +26,15 @@ import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
 
+    Bundle recibeIP;
     private Button btnValidar, btnHelp;
-    private EditText txtUsuario, txtPassword;
+    private EditText txtUsuario, txtPassword, txtIp;
     TextView txtCount, salida, salidasal;
     String encriptado;
     String Usuario;
     String Password;
     String SaltPass;
+    String iprecibida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         btnHelp = findViewById(R.id.btnhelp);
         txtUsuario = findViewById(R.id.txtUsuario);
         txtPassword = findViewById(R.id.txtPassword);
+        txtIp = findViewById(R.id.txtip);
+        iprecibida = txtIp.getText().toString();
 //        txtCount = findViewById(R.id.txtCount);
 //        salida = findViewById(R.id.passbase);
 //        salidasal = findViewById(R.id.txtsalt);
@@ -50,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
         btnValidar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData("http://10.12.7.78:80/uisrael/search_user_get.php?cedula=" + txtUsuario.getText() + "");
+
+
+                getData("http://"+txtIp.getText().toString()+":80/uisrael/search_user_get.php?cedula=" + txtUsuario.getText() + "");
             }
         });
     }
@@ -108,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     public void Acceso() {
         Intent actividadHome = new Intent(MainActivity.this, ActividadHome.class);
         actividadHome.putExtra("UserName", txtUsuario.getText().toString());
+        actividadHome.putExtra("ipEst", txtIp.getText().toString());
         Toast.makeText(MainActivity.this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
         startActivity(actividadHome);
     }
@@ -116,7 +123,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void Registrar(View view) {
         Intent actividaRegistrar = new Intent(MainActivity.this, adduser.class);
+        actividaRegistrar.putExtra("ipRegistrar", txtIp.getText().toString());
         startActivity(actividaRegistrar);
+    }
+
+
+    public void Ayuda(View view) {
+        Intent actividaAyuda = new Intent(MainActivity.this, ayuda.class);
+        startActivity(actividaAyuda);
     }
 
 //Creamos una funcion para encriptar la password que devuelve un String y recibe el byte antes transformado desde la base

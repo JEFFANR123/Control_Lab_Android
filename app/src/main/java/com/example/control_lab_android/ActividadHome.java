@@ -29,9 +29,10 @@ import java.util.Map;
 public class ActividadHome extends AppCompatActivity {
     private static final int REQUEST_CODE_QR_SCAN = 101;
     Bundle recibeDatos;
-    TextView usuario, floor, laboratorio, dispositivo, asignatura;
+    TextView usuario, floor, laboratorio, dispositivo, asignatura, docente, hentrada, hsalida;
     Button guardar, salir, verRecords;
     ImageButton capturar;
+    String ipRecibida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,14 @@ public class ActividadHome extends AppCompatActivity {
         laboratorio = findViewById(R.id.lab);
         dispositivo = findViewById(R.id.disp);
         asignatura = findViewById(R.id.asig);
+        docente = findViewById(R.id.doc);
+        hentrada = findViewById(R.id.hent);
+        hsalida = findViewById(R.id.hsal);
         guardar = findViewById(R.id.registra);
         salir = findViewById(R.id.btnSalir);
         recibeDatos = getIntent().getExtras();
         String UserName = recibeDatos.getString("UserName");
+
         usuario.setText("E" + UserName);
         if (ContextCompat.checkSelfPermission(ActividadHome.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ActividadHome.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ActividadHome.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1000);
@@ -54,7 +59,7 @@ public class ActividadHome extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar("http://10.12.7.78:80/uisrael/insert_user_post.php");
+                registrar("http://"+recibeDatos.getString("ipEst")+":80/uisrael/insert_user_post.php");
 
             }
         });
@@ -108,10 +113,16 @@ public class ActividadHome extends AppCompatActivity {
                 String lab=div[1];
                 String dis=div[2];
                 String asi=div[3];
+                String doc=div[1];
+                String hent=div[2];
+                String hsal=div[3];
                 floor.setText(pis);
                 laboratorio.setText(lab);
                 dispositivo.setText(dis);
                 asignatura.setText(asi);
+                docente.setText(doc);
+                hentrada.setText(hent);
+                hsalida.setText(hsal);
                 Toast.makeText(getApplicationContext(), "QR Capturado", Toast.LENGTH_SHORT).show();
             }
         }
@@ -139,6 +150,9 @@ public class ActividadHome extends AppCompatActivity {
                 parametros.put("laboratorio",laboratorio.getText().toString());
                 parametros.put("dispositivo",dispositivo.getText().toString());
                 parametros.put("asignatura",asignatura.getText().toString());
+                parametros.put("docente", docente.getText().toString());
+                parametros.put("h_entrada", hentrada.getText().toString());
+                parametros.put("h_salida", hsalida.getText().toString());
                 return parametros;
             }
 
@@ -151,6 +165,11 @@ public class ActividadHome extends AppCompatActivity {
     // Funcion Salir
     public void Salir(View s){
         finish();
+    }
+
+    public void verRegistros(View view) {
+        Intent Registros = new Intent(ActividadHome.this, Registros.class);
+        startActivity(Registros);
     }
 
 

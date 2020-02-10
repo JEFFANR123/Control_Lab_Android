@@ -29,8 +29,9 @@ public class adduser extends AppCompatActivity {
 
     EditText ciuser, passuser, nomuser, apeuser, niveluser;
     Button btnrec;
+    Bundle recibeDatos;
     //Variables globales para usarlos entre funciones
-    String pass_encrip, passHex;
+    String pass_encrip, passHex, ipRecibida;
 
     byte[] salt;
 
@@ -44,6 +45,7 @@ public class adduser extends AppCompatActivity {
         apeuser = findViewById(R.id.userape);
         niveluser = findViewById(R.id.usernivel);
         btnrec = findViewById(R.id.btnpass);
+        recibeDatos = getIntent().getExtras();
 
 
         //Llamamos a la funcion con el metodo GET y pasamos el parametro de conexion o URL
@@ -59,7 +61,7 @@ public class adduser extends AppCompatActivity {
                 }else if (ciuser.length()>10 || ciuser.length()<10){
                     Toast.makeText(getApplicationContext(),"Cedula Invalida",Toast.LENGTH_LONG).show();
                 }else{
-                    registrar("http://10.12.7.78:80/uisrael/insert_user_post.php");
+                    registrar("http://"+recibeDatos.getString("ipRegistrar")+":80/uisrael/insert_user_post.php");
                 }
 
             }

@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".adduser"></activity>
+        <activity android:name=".ayuda"></activity>
+        <activity android:name=".Registros" />
+        <activity android:name=".adduser" />
         <activity android:name=".ActividadHome" />
         <activity android:name=".MainActivity">
             <intent-filter>
