@@ -59,7 +59,7 @@ public class ActividadHome extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar("http://"+recibeDatos.getString("ipEst")+":80/uisrael/insert_user_post.php");
+                registrar("http://"+recibeDatos.getString("ipEst")+":80/uisrael/insert_qr_post.php");
 
             }
         });
@@ -113,9 +113,9 @@ public class ActividadHome extends AppCompatActivity {
                 String lab=div[1];
                 String dis=div[2];
                 String asi=div[3];
-                String doc=div[1];
-                String hent=div[2];
-                String hsal=div[3];
+                String doc=div[4];
+                String hent=div[5];
+                String hsal=div[6];
                 floor.setText(pis);
                 laboratorio.setText(lab);
                 dispositivo.setText(dis);
